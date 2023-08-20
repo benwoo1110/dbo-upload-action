@@ -30,7 +30,7 @@ try {
 
   const form = new FormData();
   form.append('file', fs.createReadStream(filePath));
-  form.append('metadata', JSON.parse(JSON.stringify(metadata)));
+  form.append('metadata', JSON.stringify(metadata));
   
   fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
     method: 'POST',
