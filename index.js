@@ -2,7 +2,6 @@ import core from '@actions/core';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 import fs from 'fs';
-import { stringify } from 'querystring';
 
 try {
   const apiToken = core.getInput('api_token', { required: true });
@@ -17,17 +16,25 @@ try {
   const filePath = core.getInput('file_path', { required: true });
   const debug = core.getBooleanInput('debug');
 
+  if (parentFileID && gameVersions) {
+    core.setFailed('You cannot specify both parent_file_id and game_versions');
+    return;
+  }
+
   const metadata = {
     changelog,
     changelogType,
     displayName,
-    // parentFileID,
-    releaseType,
+    parentFileID,
     gameVersions: gameVersions.split(' ').map(Number),
+    releaseType,
     relations: {
       projects: JSON.parse(projectRelations)
     }
   };
+
+  // remove undefined values
+  Object.keys(metadata).forEach(key => metadata[key] === '' && delete metadata[key]);
 
   if (debug) {
     core.info(`Uploading ${filePath} to project ${projectId}...`);
