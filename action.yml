@@ -1,0 +1,42 @@
+name: 'DBO Upload'
+description: ''
+
+inputs:
+  dbo_token:
+    description: 'DBO Token'
+    required: true
+  project_id:
+    description: 'Project ID'
+    required: true
+  changelog:
+    description: 'Changelog'
+    required: true
+  changelog_type:
+    description: 'Changelog Type'
+    required: false
+  display_name:
+    description: 'Display Name'
+    required: false
+  parent_file_id:
+    description: 'Parent File ID'
+    required: false
+  game_versions:
+    description: 'Game Versions'
+    required: false
+  release_type:
+    description: 'Release Type'
+    required: false
+  project_relations:
+    description: 'Project Relations'
+    required: false
+    default: '[]'
+  file_path:
+    description: 'File to upload'
+    required: true
+
+outputs:
+  success: # id of output
+    description: 'If the upload was successful'
+runs:
+  using: 'node16'
+  main: 'index.js'
