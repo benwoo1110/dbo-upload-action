@@ -1,8 +1,7 @@
+import core from '@actions/core';
+import FormData from 'form-data';
 import fetch from 'node-fetch';
-
-const core = require('@actions/core');
-const FormData = require('form-data');
-const fs = require('fs');
+import fs from 'fs';
 
 try {
   const apiToken = core.getInput('api_token', { required: true });
