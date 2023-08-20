@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Upload minecraft plugin to DBO with github actions!",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "benwoo1110",
+  "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",

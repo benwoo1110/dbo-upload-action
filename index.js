@@ -1,9 +1,7 @@
 import fetch from 'node-fetch';
 
 const core = require('@actions/core');
-const github = require('@actions/github');
 const FormData = require('form-data');
-const http = require('node-fetch');
 const fs = require('fs');
 
 try {
@@ -35,7 +33,7 @@ try {
   form.append('file', fs.createReadStream(filePath));
   form.append('metadata', JSON.stringify(metadata));
   
-  await fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
+  fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
     method: 'POST',
     headers: {
       'User-Agent': 'dbo-action',
