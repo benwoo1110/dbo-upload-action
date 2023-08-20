@@ -62,19 +62,25 @@ async function uploadFile(metadata) {
   await fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
     method: 'POST',
     headers: {
-      'User-Agent': 'dbo-action',
+      'User-Agent': 'dbo-upload-action',
       'X-Api-Token': apiToken,
       ...form.getHeaders()
     },
     body: form
-  })
-    .then(async res => {
+  }).then(async res => {
+    if (!res.ok) {
       if (debug) {
         console.log(res);
         console.log(await res.text());
       }
-      if (!res.ok) {
-        core.setFailed(`Request failed with status code ${res.status}`);
-      }
-    })
+      core.setFailed(`Request failed with status code ${res.status}`);
+      process.exit(1);
+    }
+    return await res.json();
+  }).then(json => {
+    if (debug) {
+      console.log(json);
+    }
+    core.setOutput('file_id', json.id);
+  })
 }
