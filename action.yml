@@ -1,5 +1,5 @@
 name: 'DBO Upload'
-description: ''
+description: 'Upload minecraft plugin to dev.bukkit.org with github actions!'
 
 inputs:
   api_token:
@@ -35,7 +35,7 @@ inputs:
     description: 'File to upload'
     required: true
   debug:
-    description: 'Debug'
+    description: 'Print debug information of api requests'
     required: false
     default: 'false'
 
