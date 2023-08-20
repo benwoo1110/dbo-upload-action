@@ -75,7 +75,9 @@ async function gameVersionsToIds() {
 
   const idsMap = {};
   availableVersions.forEach(version => {
-    idsMap[version.name] = version.id;
+    if (version.gameVersionTypeID === 1) {
+      idsMap[version.name] = version.id;
+    }
   });
 
   const parsedGameVersions = [];
