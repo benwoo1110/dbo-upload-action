@@ -2,6 +2,7 @@ import core from '@actions/core';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 import fs from 'fs';
+import { stringify } from 'querystring';
 
 try {
   const apiToken = core.getInput('api_token', { required: true });
@@ -30,7 +31,7 @@ try {
 
   if (debug) {
     core.info(`Uploading ${filePath} to project ${projectId}...`);
-    core.info(metadata);
+    core.info(JSON.stringify(metadata));
   }
 
   const form = new FormData();
@@ -49,8 +50,8 @@ try {
   .then(res => {
     if (!res.ok) {
       if (debug) {
-        core.info(res);
-        core.info(res.json());
+        console.log(res);
+        core.info(res.json().stringify());
       }
       core.setFailed(`Request failed with status code ${res.status}`);
       return;
