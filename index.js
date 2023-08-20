@@ -17,7 +17,7 @@ const debug = core.getBooleanInput('debug');
 
 try {
   console.log(`Uploading ${filePath} to project ${projectId}...`);
-  const metadata = parseMetadata();
+  const metadata = await parseMetadata();
   if (debug) {
     console.log(JSON.stringify(metadata, null, 2));
   }
@@ -26,7 +26,7 @@ try {
   core.setFailed(error.message);
 }
 
-function parseMetadata() {
+async function parseMetadata() {
   if (!parentFileID && !gameVersions) {
     core.setFailed('You must specify either parent_file_id or game_versions');
     process.exit(1);
@@ -41,7 +41,7 @@ function parseMetadata() {
     changelogType,
     displayName,
     parentFileID,
-    gameVersions: gameVersionsToIds(),
+    gameVersions: await gameVersionsToIds(),
     releaseType,
     relations: {
       projects: JSON.parse(projectRelations)
