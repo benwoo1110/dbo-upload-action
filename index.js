@@ -41,7 +41,7 @@ function parseMetadata() {
     changelogType,
     displayName,
     parentFileID,
-    gameVersions: gameVersions.split(' ').map(Number),
+    gameVersions: gameVersionsToIds(),
     releaseType,
     relations: {
       projects: JSON.parse(projectRelations)
@@ -52,6 +52,43 @@ function parseMetadata() {
   Object.keys(metadata).forEach(key => metadata[key] === '' && delete metadata[key]);
 
   return metadata;
+}
+
+async function gameVersionsToIds() {
+  const availableVersions = await fetch('https://dev.bukkit.org/api/game/versions', {
+    method: 'GET',
+    headers: {
+      'User-Agent': 'dbo-upload-action',
+      'X-Api-Token': apiToken,
+    }
+  }).then(async res => {
+    if (!res.ok) {
+      if (debug) {
+        console.log(res);
+        console.log(await res.text());
+      }
+      core.setFailed(`Request failed with status code ${res.status}`);
+      process.exit(1);
+    }
+    return await res.json();
+  })
+
+  const idsMap = {};
+  availableVersions.forEach(version => {
+    idsMap[version.name] = version.id;
+  });
+
+  const parsedGameVersions = [];
+  gameVersions.split(', ').forEach(version => {
+    const id = idsMap[version];
+    if (!id) {
+      core.setFailed(`Invalid game version ${version}`);
+      process.exit(1);
+    }
+    parsedGameVersions.push(id);
+  })
+
+  return parsedGameVersions;
 }
 
 async function uploadFile(metadata) {
