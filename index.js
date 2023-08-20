@@ -23,7 +23,7 @@ try {
     displayName,
     // parentFileID,
     releaseType,
-    gameVersions: gameVersions.split(' '),
+    gameVersions: gameVersions.split(' ').map(Number),
     relations: {
       projects: JSON.parse(projectRelations)
     }
@@ -51,7 +51,7 @@ try {
     if (!res.ok) {
       if (debug) {
         console.log(res);
-        core.info(res.json().stringify());
+        core.info(JSON.stringify(res.json()));
       }
       core.setFailed(`Request failed with status code ${res.status}`);
       return;
