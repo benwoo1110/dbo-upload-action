@@ -28,6 +28,11 @@ try {
     }
   };
 
+  if (debug) {
+    core.info(`Uploading ${filePath} to project ${projectId}...`);
+    core.info(metadata);
+  }
+
   const form = new FormData();
   form.append('file', fs.createReadStream(filePath));
   form.append('metadata', JSON.stringify(metadata));
