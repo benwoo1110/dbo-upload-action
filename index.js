@@ -21,7 +21,7 @@ try {
   if (debug) {
     console.log(JSON.stringify(metadata, null, 2));
   }
-  uploadFile(metadata);
+  await uploadFile(metadata);
 } catch (error) {
   core.setFailed(error.message);
 }
@@ -54,12 +54,12 @@ function parseMetadata() {
   return metadata;
 }
 
-function uploadFile(metadata) {
+async function uploadFile(metadata) {
   const form = new FormData();
   form.append('file', fs.createReadStream(filePath));
   form.append('metadata', JSON.stringify(metadata));
 
-  fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
+  await fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
     method: 'POST',
     headers: {
       'User-Agent': 'dbo-action',
@@ -69,11 +69,11 @@ function uploadFile(metadata) {
     body: form
   })
     .then(async res => {
+      if (debug) {
+        console.log(res);
+        console.log(await res.text());
+      }
       if (!res.ok) {
-        if (debug) {
-          console.log(await res.text());
-          console.log(JSON.stringify(await res.json(), null, 2));
-        }
         core.setFailed(`Request failed with status code ${res.status}`);
       }
     })
