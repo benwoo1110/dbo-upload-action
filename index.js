@@ -20,7 +20,7 @@ try {
     changelog,
     changelogType,
     displayName,
-    parentFileID,
+    // parentFileID,
     releaseType,
     gameVersions: gameVersions.split(' '),
     relations: {
@@ -44,14 +44,13 @@ try {
   .then(res => {
     if (!res.ok) {
       if (debug) {
-        console.log(res);
+        core.info(res);
+        core.info(res.json());
       }
-      throw new Error(`Received status code ${res.status}`);
+      core.setFailed(`Request failed with status code ${res.status}`);
+      return;
     }
-    return res.json();
-  })
-  .then(json => {
-    core.setOutput('success', json)
+    core.setOutput('success', res.json())
   })
 } catch (error) {
   core.setFailed(error.message);
