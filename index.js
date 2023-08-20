@@ -16,19 +16,22 @@ try {
   const filePath = core.getInput('file_path', { required: true });
   const debug = core.getBooleanInput('debug');
 
-  const form = new FormData();
-  form.append('file', fs.createReadStream(filePath));
-  form.append('metadata', {
+  const metadata = {
     changelog,
     changelogType,
     displayName,
     parentFileID,
     releaseType,
-    gameVersions: gameVersions.split(','),
+    gameVersions: gameVersions.split(' '),
     relations: {
       projects: JSON.parse(projectRelations)
     }
-  });
+  };
+
+  const form = new FormData();
+  form.append('file', fs.createReadStream(filePath));
+  form.append('metadata', JSON.parse(JSON.stringify(metadata)));
+  
   fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
     method: 'POST',
     headers: {
