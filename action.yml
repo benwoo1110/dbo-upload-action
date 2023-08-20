@@ -2,8 +2,8 @@ name: 'DBO Upload'
 description: ''
 
 inputs:
-  dbo_token:
-    description: 'DBO Token'
+  api_token:
+    description: 'DBO API Token'
     required: true
   project_id:
     description: 'Project ID'

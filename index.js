@@ -4,7 +4,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 
 try {
-  const dboToken = core.getInput('dbo_token', { required: true });
+  const apiToken = core.getInput('api_token', { required: true });
   const projectId = core.getInput('project_id', { required: true });
   const changelog = core.getInput('changelog', { required: true });
   const changelogType = core.getInput('changelog_type');
@@ -33,7 +33,7 @@ try {
     method: 'POST',
     headers: {
       'User-Agent': 'dbo-action',
-      'X-Api-Token': dboToken,
+      'X-Api-Token': apiToken,
       ...form.getHeaders()
     },
     body: form
