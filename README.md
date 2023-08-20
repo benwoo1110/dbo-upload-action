@@ -44,14 +44,14 @@ Upload from latest github release:
   with:
     token: ${{ secrets.GITHUB_TOKEN }}
     regex: true
-    file: my-plugin-(.*)\.jar
+    file: my-plugin-(.*)\.jar  # Replace with your plugin's jar file
     target: 'out/'
 
 - name: Upload to dev.bukkit.org
   uses: benwoo1110/dbo-upload-action@main
   with:
-    api_token: ${{ secrets.DBO_UPLOAD_API_TOKEN }}
-    project_id: 30765
+    api_token: ${{ secrets.DBO_UPLOAD_API_TOKEN }}  # Add this to your repo's secrets
+    project_id: 12345  # Replace with your project id
     changelog: ${{ steps.release-artifact.outputs.body }}
     changelog_type: markdown
     display_name: ${{ steps.release-artifact.outputs.version }}
