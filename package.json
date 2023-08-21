@@ -1,6 +1,6 @@
 {
   "name": "dbo-upload-action",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Upload minecraft plugin to DBO with github actions!",
   "main": "dist/index.js",
   "scripts": {
