@@ -45,4 +45,4 @@ outputs:
 
 runs:
   using: 'node16'
-  main: 'index.js'
+  main: 'index.ts'
