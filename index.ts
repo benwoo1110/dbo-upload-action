@@ -42,15 +42,18 @@ const projectRelations = core.getInput('project_relations')
 const filePath = core.getInput('file_path', { required: true })
 const debug = core.getBooleanInput('debug')
 
-try {
+main().catch(err => {
+  console.error(err)
+  core.setFailed(err.message)
+})
+
+async function main() {
   console.log(`Uploading ${filePath} to project ${projectId}...`)
   const metadata: Metadata = await parseMetadata()
   if (debug) {
     console.log(JSON.stringify(metadata, null, 2))
   }
   await uploadFile(metadata)
-} catch (error: any) {
-  core.setFailed(error.message)
 }
 
 async function parseMetadata(): Promise<Metadata> {
@@ -119,7 +122,7 @@ async function gameVersionsToIds() {
 
 async function uploadFile(metadata: Metadata) {
   // Remove '' from metadata
-  const metadataCleaned: { [key: string]: any } = {}
+  const metadataCleaned: { [key: string]: unknown } = {}
   Object.keys(metadata).forEach(key => {
     const value = metadata[key as keyof typeof metadata]
     if (value !== '') {
