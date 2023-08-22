@@ -1,5 +1,7 @@
 name: 'DBO Upload'
 description: 'Upload minecraft plugin to dev.bukkit.org with github actions!'
+icon: upload
+color: blue
 
 inputs:
   api_token:
