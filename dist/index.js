@@ -16281,8 +16281,8 @@ var init_multipart_parser = __esm({
 });
 
 // index.ts
-var import_core = __toESM(require_core(), 1);
-var import_form_data = __toESM(require_form_data(), 1);
+var import_core = __toESM(require_core());
+var import_form_data = __toESM(require_form_data());
 
 // node_modules/node-fetch/src/index.js
 var import_node_http2 = __toESM(require("node:http"), 1);
@@ -17566,7 +17566,7 @@ function fixResponseChunkedTransferBadEnding(request, errorCallback) {
 }
 
 // index.ts
-var import_fs = __toESM(require("fs"), 1);
+var import_fs = __toESM(require("fs"));
 var apiToken = import_core.default.getInput("api_token", { required: true });
 var projectId = import_core.default.getInput("project_id", { required: true });
 var changelog = import_core.default.getInput("changelog");
