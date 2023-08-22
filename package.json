@@ -2,9 +2,10 @@
   "name": "dbo-upload-action",
   "version": "1.0.0",
   "description": "Upload minecraft plugin to DBO with github actions!",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild index.ts --bundle --platform=node --outdir=dist",
+    "build": "esbuild index.ts --platform=node --outdir=dist",
     "lint": "eslint index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
