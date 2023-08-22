@@ -37,11 +37,11 @@ async function parseMetadata() {
   }
   const metadata = {
     changelog,
-    changelogType,
+    changelogType: changelogType.toLowerCase(),
     displayName,
     parentFileID,
     gameVersions: await gameVersionsToIds(),
-    releaseType,
+    releaseType: releaseType.toLowerCase(),
     relations: {
       projects: JSON.parse(projectRelations)
     }
