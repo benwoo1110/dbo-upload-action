@@ -111,8 +111,8 @@ async function gameVersionsToIds() {
   gameVersions.split(', ').forEach(version => {
     const id = idsMap[version]
     if (!id) {
-      core.setFailed(`Invalid game version ${version}`)
-      process.exit(1)
+      console.log(`ERROR: Invalid game version ${version}`)
+      return
     }
     parsedGameVersions.push(id)
   })
