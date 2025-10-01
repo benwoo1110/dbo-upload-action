@@ -3,6 +3,7 @@ import core from "@actions/core";
 import FormData from "form-data";
 import fetch from "node-fetch";
 import fs from "fs";
+const baseUrl = "http://minecraft.curseforge.com";
 const apiToken = core.getInput("api_token", { required: true });
 const projectId = core.getInput("project_id", { required: true });
 const changelog = core.getInput("changelog");
@@ -49,7 +50,7 @@ async function parseMetadata() {
   return metadata;
 }
 async function gameVersionsToIds() {
-  const availableVersions = await fetch("https://dev.bukkit.org/api/game/versions", {
+  const availableVersions = await fetch(`${baseUrl}/api/game/versions`, {
     method: "GET",
     headers: {
       "User-Agent": "dbo-upload-action",
@@ -94,7 +95,7 @@ async function uploadFile(metadata) {
   const form = new FormData();
   form.append("file", fs.createReadStream(filePath));
   form.append("metadata", JSON.stringify(metadataCleaned));
-  await fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
+  await fetch(`${baseUrl}/api/projects/${projectId}/upload-file`, {
     method: "POST",
     headers: {
       "User-Agent": "dbo-upload-action",

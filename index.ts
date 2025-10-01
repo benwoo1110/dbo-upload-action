@@ -3,6 +3,8 @@ import FormData from 'form-data'
 import fetch from 'node-fetch'
 import fs from 'fs'
 
+const baseUrl = 'http://minecraft.curseforge.com'
+
 interface Metadata {
   changelog: string
   changelogType: string
@@ -82,7 +84,7 @@ async function parseMetadata(): Promise<Metadata> {
 }
 
 async function gameVersionsToIds() {
-  const availableVersions = await fetch('https://dev.bukkit.org/api/game/versions', {
+  const availableVersions = await fetch(`${baseUrl}/api/game/versions`, {
     method: 'GET',
     headers: {
       'User-Agent': 'dbo-upload-action',
@@ -134,7 +136,7 @@ async function uploadFile(metadata: Metadata) {
   form.append('file', fs.createReadStream(filePath))
   form.append('metadata', JSON.stringify(metadataCleaned))
 
-  await fetch(`https://dev.bukkit.org/api/projects/${projectId}/upload-file`, {
+  await fetch(`${baseUrl}/api/projects/${projectId}/upload-file`, {
     method: 'POST',
     headers: {
       'User-Agent': 'dbo-upload-action',
