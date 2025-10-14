@@ -91,15 +91,16 @@ async function gameVersionsToIds() {
       'X-Api-Token': apiToken,
     }
   }).then(async res => {
+    const restext = await res.text()
     if (debug) {
       console.log(res)
-      console.log(await res.text())
+      console.log(restext)
     }
     if (!res.ok) {
       core.setFailed(`Request failed with status code ${res.status}`)
       process.exit(1)
     }
-    return await res.json()
+    return JSON.parse(restext)
   }) as Version[]
 
   const idsMap: { [key: string]: number } = {}
@@ -145,15 +146,16 @@ async function uploadFile(metadata: Metadata) {
     },
     body: form
   }).then(async res => {
+    const restext = await res.text()
     if (debug) {
       console.log(res)
-      console.log(await res.text())
+      console.log(restext)
     }
     if (!res.ok) {
       core.setFailed(`Request failed with status code ${res.status}`)
       process.exit(1)
     }
-    return await res.json() as Output
+    return JSON.parse(restext)
   }).then(json => {
     if (debug) {
       console.log(json)
