@@ -3,7 +3,7 @@ import FormData from 'form-data'
 import fetch from 'node-fetch'
 import fs from 'fs'
 
-const baseUrl = 'http://minecraft.curseforge.com'
+const baseUrl = 'https://minecraft.curseforge.com'
 
 interface Metadata {
   changelog: string

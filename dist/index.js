@@ -3,7 +3,7 @@ import core from "@actions/core";
 import FormData from "form-data";
 import fetch from "node-fetch";
 import fs from "fs";
-const baseUrl = "http://minecraft.curseforge.com";
+const baseUrl = "https://minecraft.curseforge.com";
 const apiToken = core.getInput("api_token", { required: true });
 const projectId = core.getInput("project_id", { required: true });
 const changelog = core.getInput("changelog");
