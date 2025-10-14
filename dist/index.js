@@ -22,9 +22,6 @@ main().catch((err) => {
 async function main() {
   console.log(`Uploading ${filePath} to project ${projectId}...`);
   const metadata = await parseMetadata();
-  if (debug) {
-    console.log(JSON.stringify(metadata, null, 2));
-  }
   await uploadFile(metadata);
 }
 async function parseMetadata() {
@@ -93,9 +90,13 @@ async function uploadFile(metadata) {
       metadataCleaned[key] = value;
     }
   });
+  const submitMetadata = JSON.stringify(metadataCleaned);
+  if (debug) {
+    console.log(submitMetadata);
+  }
   const form = new FormData();
+  form.append("metadata", submitMetadata);
   form.append("file", fs.createReadStream(filePath));
-  form.append("metadata", JSON.stringify(metadataCleaned));
   await fetch(`${baseUrl}/api/projects/${projectId}/upload-file`, {
     method: "POST",
     headers: {

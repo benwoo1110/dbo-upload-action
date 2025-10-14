@@ -52,9 +52,6 @@ main().catch(err => {
 async function main() {
   console.log(`Uploading ${filePath} to project ${projectId}...`)
   const metadata: Metadata = await parseMetadata()
-  if (debug) {
-    console.log(JSON.stringify(metadata, null, 2))
-  }
   await uploadFile(metadata)
 }
 
@@ -133,9 +130,14 @@ async function uploadFile(metadata: Metadata) {
     }
   })
 
+  const submitMetadata = JSON.stringify(metadataCleaned)
+  if (debug) {
+    console.log(submitMetadata)
+  }
+
   const form = new FormData()
+  form.append('metadata', submitMetadata)
   form.append('file', fs.createReadStream(filePath))
-  form.append('metadata', JSON.stringify(metadataCleaned))
 
   await fetch(`${baseUrl}/api/projects/${projectId}/upload-file`, {
     method: 'POST',
@@ -155,7 +157,7 @@ async function uploadFile(metadata: Metadata) {
       core.setFailed(`Request failed with status code ${res.status}`)
       process.exit(1)
     }
-    return JSON.parse(restext)
+    return JSON.parse(restext) as Output
   }).then(json => {
     if (debug) {
       console.log(json)
