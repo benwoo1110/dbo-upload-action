@@ -91,11 +91,11 @@ async function gameVersionsToIds() {
       'X-Api-Token': apiToken,
     }
   }).then(async res => {
+    if (debug) {
+      console.log(res)
+      console.log(await res.text())
+    }
     if (!res.ok) {
-      if (debug) {
-        console.log(res)
-        console.log(await res.text())
-      }
       core.setFailed(`Request failed with status code ${res.status}`)
       process.exit(1)
     }
@@ -145,11 +145,11 @@ async function uploadFile(metadata: Metadata) {
     },
     body: form
   }).then(async res => {
+    if (debug) {
+      console.log(res)
+      console.log(await res.text())
+    }
     if (!res.ok) {
-      if (debug) {
-        console.log(res)
-        console.log(await res.text())
-      }
       core.setFailed(`Request failed with status code ${res.status}`)
       process.exit(1)
     }
